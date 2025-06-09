@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Mi Sistema{% endblock %}</title>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav style="background-color: #f0f0f0; padding: 10px;">
+    {% if user.is_authenticated %}
+      <span>👤 {{ user.username }} ({{ user.tipo }})</span>
+      |
+      <a href="{% url 'logout' %}">Cerrar sesión</a>
+    {% else %}
+      <a href="{% url 'login' %}">Iniciar sesión</a>
+    {% endif %}
+  </nav>
+
+  <hr>
+
+  <!-- Contenido -->
+  <div>
+    {% block content %}
+    {% endblock %}
+  </div>
+
+</body>
+</html>

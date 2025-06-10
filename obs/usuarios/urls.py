@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:pk>/editar/', views.UsuarioUpdateView.as_view(), name='usuario_edit'),
     path('<int:pk>/inactivar/', views.usuario_inactivar, name='usuario_inactivar'),
     
+    
 ]

@@ -11245,3 +11245,8 @@ body {
 .input-grande {
     height: 100px;
 }
+
+.ph {
+  text-align: center;
+  font-weight: 500;
+}

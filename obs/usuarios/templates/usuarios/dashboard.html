@@ -1,8 +1,13 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Bienvenido{% endblock %}
 
 {% block content %}
-  <h1>Bienvenido al sistema</h1>
-  <p>Hola, {{ user.username }}. Tu rol es: {{ user.tipo }}</p>
+  <div class="container-fluid px-4">
+    <h1 class="mt-4">Observatorio Distrital de Seguridad Ciudadana</h1>
+    <p>Hola, {{ user.username }}. Tu rol es: {{ user.tipo }}</p>
+    <div class="card mb-4">
+      <img src={% static 'img/portada1.jpeg' %} class="img-fluid border border-3" alt="CECOM">
+    </div>
+  </div>
 {% endblock %}

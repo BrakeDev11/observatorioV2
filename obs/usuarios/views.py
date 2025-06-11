@@ -1,6 +1,6 @@
 from django.views.generic import ListView, CreateView, UpdateView, TemplateView
 from django.shortcuts import redirect, get_object_or_404, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth import login, logout
 from .models import Usuario
@@ -9,18 +9,25 @@ from .forms import LoginForm, UsuarioForm
 #vista de login
 def login_view(request):
     form = LoginForm(data=request.POST or None)
+    show_error_modal = False 
 
-    if request.method == 'POST' and form.is_valid():
-        user = form.get_user()
-        login(request, user) # type: ignore
-        return redirect('dashboard')  # Cambia a tu vista inicial
+    if request.method == 'POST':
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('dashboard')  # Redirige a la vista protegida
+        else:
+            # Guarda la bandera de error para el redirect
+            show_error_modal = True 
 
-    return render(request, 'login.html', {'form': form})
+    # Recupera la bandera tras el redirect
+
+    return render(request, 'login.html', {'form': form, 'show_error_modal': show_error_modal})
 
 #vista de logout
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('/?logout=1')
 
 # Mixin personalizado para restringir acceso a usuarios tipo 'admin'
 class AdminRequiredMixin(UserPassesTestMixin):

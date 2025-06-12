@@ -7,22 +7,25 @@ from .models import Usuario
 from .forms import LoginForm, UsuarioForm
 
 #vista de login
+
+
 def login_view(request):
     form = LoginForm(data=request.POST or None)
-    show_error_modal = False 
+    show_error_modal = False
 
     if request.method == 'POST':
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('dashboard')  # Redirige a la vista protegida
+            return redirect('dashboard')
         else:
-            # Guarda la bandera de error para el redirect
-            show_error_modal = True 
+            print("⚠️ Errores del formulario:", form.errors)
+            show_error_modal = True  # <- Aquí se activa
 
-    # Recupera la bandera tras el redirect
-
-    return render(request, 'login.html', {'form': form, 'show_error_modal': show_error_modal})
+    return render(request, 'login.html', {
+        'form': form,
+        'show_error_modal': show_error_modal
+    })
 
 #vista de logout
 def logout_view(request):

@@ -3,47 +3,63 @@
 {% block title %}Bienvenido{% endblock %}
 
 {% block content%}
-
-<h2>{% if object %}Editar Usuario{% else %}Crear Usuario{% endif %}</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Guardar</button>
-</form>
 <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-7">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">{% if object %}Editar Usuario{% else %}Crear Usuario{% endif %}</h3></div>
                                     <div class="card-body">
                                         <form method="post">
                                           {% csrf_token %}
                                             <div class="form-floating mb-3 ">
-                                                <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" name="username"/>
+                                                <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" name="username" value="{{ form.username.value |default_if_none:'' }}">
                                                 <label for="inputFirstName">Usuario</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" name="email" />
+                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" name="email" value="{{ form.email.value |default_if_none:'' }}" />
                                                 <label for="inputEmail">Email address</label>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPassword" type="password" placeholder="Create a password" name="password" />
+                                                        <input class="form-control" id="inputPassword" name="password" placeholder="password" type="password">    
+                                                        {% if form.password.errors %}
+                                                        <div class="text-danger small">
+                                                            {{ form.password.errors.0 }}
+                                                        </div>
+                                                        {% endif %}
                                                         <label for="inputPassword">Password</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password" name="password" />
+                                                        <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password" name="password2" />
+                                                        {% if form.password.errors %}
+                                                        <div class="text-danger small">
+                                                            {{ form.password.errors.0 }}
+                                                        </div>
+                                                        {% endif %}
                                                         <label for="inputPasswordConfirm">Confirm Password</label>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-floating mb-3 ">
+                                                <select name="tipo" required id="id_tipo" class="form-select">
+                                                  <option value="admin" {% if form.tipo.value == 'admin' %}selected{% endif %}>administrador</option>
+                                                  <option value="operador"{% if form.tipo.value == 'operador' %}selected{% endif %}>operador</option>
+                                                  <option value="lector"{% if form.tipo.value == 'lector' %}selected{% endif %}>lector</option>
+                                                </select>  
+                                            </div>
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="is_active"{% if form.is_active.value %}checked{% endif %}>
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Usuario Activo</label>
+                                                </div>
+                                            </div>
                                             <div class="mt-4 mb-0">
-                                                <div class="d-grid"><a class="btn btn-primary btn-block" href="login.html">Create Account</a></div>
+                                                <div class="d-grid"><button type="submit" class="btn btn-primary btn-block" >Guardar</button></div>
                                             </div>
                                         </form>
                                     </div>

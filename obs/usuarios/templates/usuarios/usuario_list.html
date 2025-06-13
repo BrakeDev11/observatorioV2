@@ -3,18 +3,48 @@
 {% block title %}Bienvenido{% endblock %}
 
 {% block content %}
-  <div class="container-fluid px-4">
-    <h1 class= "mt-4">Lista de Usuarios</h1>
-    <a href="{% url 'usuario_create' %}">Crear nuevo usuario</a>
-    <ul>
-      {% for usuario in object_list %}
-        <li>
-          {{ usuario.username }} - {{ usuario.tipo }} - {{ usuario.is_active }}
-          <a href="{% url 'usuario_edit' usuario.pk %}">Editar</a>
-          {% if usuario.is_active %}
-            <a href="{% url 'usuario_inactivar' usuario.pk %}">Inactivar</a>
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ul>
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Lista de Usuarios</h1>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>N°</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for usuario in object_list %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ usuario.username }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.tipo }}</td>
+          <td>
+            {% if usuario.is_active %}
+              ✅
+            {% else %}
+              ❌
+            {% endif %}
+          </td>
+          <td>
+            <a class="btn btn-sm btn-warning" href="{% url 'usuario_edit' usuario.pk %}">Editar</a>
+            {% if usuario.is_active %}
+              <a class="btn btn-sm btn-danger" href="{% url 'usuario_inactivar' usuario.pk %}">Inactivar</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="text-center">No hay usuarios registrados.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}

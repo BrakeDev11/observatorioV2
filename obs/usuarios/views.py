@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth import login, logout
 from .models import Usuario
 from .forms import LoginForm, UsuarioForm
+from django.contrib import messages
 
 #vista de login
 
@@ -17,14 +18,15 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            messages.success(request, f"¡Bienvenido {user.get_full_name() or user.username}!")
             return redirect('dashboard')
         else:
-            print("⚠️ Errores del formulario:", form.errors)
-            show_error_modal = True  # <- Aquí se activa
+            messages.error(request, "Usuario o contraseña incorrectos.")
+            show_error_modal = True
 
     return render(request, 'login.html', {
         'form': form,
-        'show_error_modal': show_error_modal
+        'show_error_modal': show_error_modal,
     })
 
 #vista de logout

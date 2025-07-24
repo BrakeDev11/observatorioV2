@@ -73,7 +73,7 @@
                 </footer>
             </div>
         </div>
-        <!-- Modal de Error -->
+
         {% if show_error_modal %}
         <div class="modal fade" id="loginErrorModal" tabindex="-1" aria-labelledby="loginErrorLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -83,7 +83,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
+                {% if form.non_field_errors %}
+                {{ form.non_field_errors }}
+                {% else %}
                 Usuario o contraseña incorrectos. Por favor, verifique sus datos.
+                {% endif %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -91,20 +95,40 @@
             </div>
         </div>
         </div>
-        {% endif %}
 
-        <!-- Script para mostrar el modal si hay error -->
-        {% if show_error_modal %}
         <script>
+        document.addEventListener('DOMContentLoaded', function () {
             const modal = new bootstrap.Modal(document.getElementById('loginErrorModal'));
             modal.show();
+        });
         </script>
         {% endif %}
-        {% if show_error_modal %}
+
+        {% if messages %}
+        <div class="modal fade" id="messagesModal" tabindex="-1" aria-labelledby="messagesLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-success">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="messagesLabel">Información</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                {% for message in messages %}
+                <div class="mb-2">{{ message }}</div>
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
         <script>
-            console.log('Intentando mostrar modal...');
-            const modal = new bootstrap.Modal(document.getElementById('loginErrorModal'));
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = new bootstrap.Modal(document.getElementById('messagesModal'));
             modal.show();
+        });
         </script>
         {% endif %}
 

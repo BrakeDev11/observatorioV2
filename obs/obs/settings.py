@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'incidencia',
     'categoria',
     'usuarios',
+    'personal',
 ]
 
 MIDDLEWARE = [

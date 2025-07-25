@@ -11,6 +11,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
+  --bs-obs: #074197;
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
@@ -7062,6 +7063,7 @@ textarea.form-control-lg {
 
 .shadow-lg {
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+
 }
 
 .shadow-none {
@@ -7090,6 +7092,10 @@ textarea.form-control-lg {
 
 .top-0 {
   top: 0 !important;
+}
+
+.top-25 {
+  top: 25% !important;
 }
 
 .top-50 {
@@ -7631,9 +7637,9 @@ textarea.form-control-lg {
   margin-top: 3rem !important;
 }
 .mt-6 {
-  margin-top: 5rem !important;
+  margin-top: 8rem !important;
+  border: 3px solid red !important; /* prueba visual */
 }
-
 
 .mt-auto {
   margin-top: auto !important;

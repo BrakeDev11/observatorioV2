@@ -10,6 +10,8 @@ from django.contrib import messages
 #vista de login
 
 
+from django.urls import reverse
+
 def login_view(request):
     form = LoginForm(data=request.POST or None)
     show_error_modal = False
@@ -18,10 +20,9 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            messages.success(request, f"¡Bienvenido {user.get_full_name() or user.username}!")
-            return redirect('dashboard')
+            request.session['bienvenida_usuario'] = user.get_full_name() or user.username
+            return redirect(f"{reverse('dashboard')}?bienvenida=1")
         else:
-            messages.error(request, "Usuario o contraseña incorrectos.")
             show_error_modal = True
 
     return render(request, 'login.html', {
@@ -66,7 +67,7 @@ class UsuarioUpdateView(LoginRequiredMixin, AdminRequiredMixin, UpdateView):
     form_class = UsuarioForm
     template_name = 'usuarios/usuario_form.html'
     success_url = reverse_lazy('usuario_list')
-
+ 
 # Inactivar usuario (solo admins)
 def usuario_inactivar(request, pk):
     if request.user.is_authenticated and request.user.tipo == 'admin':

@@ -12,18 +12,25 @@
         <tr>
             <th>Código</th>
             <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Creado</th>
             <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        {% for categoria in categorias %}
+        {% for categoria in categoria %}
         <tr>
           <td>{{ categoria.codigo }}</td>
           <td>{{ categoria.nombre }}</td>
+          <td>{{ categoria.tipo }}</td>
+          <td>{{ categoria.creado_por.get_full_name|default:categoria.creado_por.username }}</td>
+
 
           <td>
                 <a href="{% url 'categoria_editar' categoria.pk %}" class="btn btn-primary btn-sm">Editar</a>
-                <a href="{% url 'categoria_eliminar' categoria.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+                <button onclick="openDeleteModal('{% url 'categoria_eliminar' categoria.id %}')" class="btn btn-danger btn-sm">
+                  Eliminar
+                </button>
           </td>
         </tr>
         {% empty %}
@@ -35,4 +42,19 @@
     </table>
   </div>
 </div>
+
+{% include 'modal.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function openDeleteModal(deleteUrl) {
+    const confirmBtn = document.getElementById('confirmDeleteBtn');
+    confirmBtn.href = deleteUrl;
+
+    const modalElement = document.getElementById('confirmModal');
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+  }
+</script>
 {% endblock %}

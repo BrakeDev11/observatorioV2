@@ -6,8 +6,34 @@
   <div class="container-fluid px-4">
     <h1 class="mt-4">Observatorio Distrital de Seguridad Ciudadana</h1>
     <p>Hola, {{ user.username }}. Tu rol es: {{ user.tipo }}</p>
+
     <div class="card mb-4">
-      <img src={% static 'img/portada1.jpeg' %} class="img-fluid border border-3" alt="CECOM">
+      <div class="container mt-4 mb-4">
+        <div id="carouselHome" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="{% static 'img/carrusel1.jpeg' %}" class="d-block w-100" alt="Imagen 1">
+            </div>
+
+            <div class="carousel-item">
+              <img src="{% static 'img/carrusel2.png' %}" class="d-block w-100" alt="Imagen 2">
+            </div>
+
+            <div class="carousel-item">
+              <img src="{% static 'img/carrusel3.png' %}" class="d-block w-100" alt="Imagen 3">
+            </div>
+          </div>
+
+          <!-- Controles -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselHome" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselHome" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+      </div>  
     </div>
-  </div>
+  
 {% endblock %}
